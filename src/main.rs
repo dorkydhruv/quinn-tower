@@ -6,9 +6,9 @@ use {
     tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt},
 };
 
+mod cloudflare;
 mod receiver;
 mod sender;
-
 #[derive(Parser)]
 #[clap(
     name = "quinn-tower",
@@ -32,8 +32,6 @@ enum Mode {
         client_ip: String,
         #[clap(short)]
         port: u16,
-        #[clap(short)]
-        cloudflare_kv: String,
     },
     Receiver {
         #[clap(short)]
