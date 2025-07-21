@@ -1,4 +1,4 @@
-# [WIP] Quic File Transfer
+# [WIP] Quinn Tower
 
 Idea: Implement a simple file transfer service using QUIC to achieve improved performance compared to using SCP for copying the tower file (which contains voting data). The service will copy the file content and store it on a caching server (Cloudflare KV). This ensures that even if the primary node's network card fails, the backup node can use the cached tower file to promote itself effectively.
 
