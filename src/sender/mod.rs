@@ -47,9 +47,9 @@ pub async fn init_sender(client_ip: &str, port: u16) -> Result<(), anyhow::Error
     let (mut send_stream, mut recv_stream) = connection.open_bi().await?;
 
     // recv_stream.read
-    loop {
-        tokio::select! {}
-    }
+    // loop {
+    //     tokio::select! {}
+    // }
 
     Ok(())
 }
