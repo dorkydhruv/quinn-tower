@@ -6,3 +6,10 @@ Idea: Implement a simple file transfer service using QUIC to achieve improved pe
 - [ ] Implement some db to store the file
 - [ ] Make reader so client can read the file
 - [ ] Implement cmd so this can be trigger by external service(watcher or something else)
+
+Message base service
+
+- default if primary sends tower file to cloudflare kv
+- always have a quic bi direction connection open
+- if validator goes down try to load backup with quic sending tower file
+- if quic connection fails then load backup from cloudflare kv
