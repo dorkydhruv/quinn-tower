@@ -1419,6 +1419,7 @@ dependencies = [
  "cloudflare",
  "dotenv",
  "futures",
+ "once_cell",
  "quinn",
  "rcgen",
  "rustls",
