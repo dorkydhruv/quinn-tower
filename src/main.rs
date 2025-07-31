@@ -22,20 +22,25 @@ struct Args {
 
 #[derive(Clone, Subcommand)]
 enum Mode {
-    #[clap(value_parser)]
-    Sender {
+    #[clap(value_parser)] Sender {
         #[clap(short)]
         cert_path: PathBuf,
         #[clap(short)]
         key_path: PathBuf,
         #[clap(short)]
-        client_ip: String,
+        tower_file_path: PathBuf,
+        #[clap(long)]
+        cloudflare_token: Option<String>,
         #[clap(short)]
         port: u16,
     },
     Receiver {
         #[clap(short)]
-        port: u16,
+        sender_address: String,
+        #[clap(short)]
+        output_path: PathBuf,
+        #[clap(long)]
+        cloudflare_token: Option<String>,
     },
 }
 
@@ -53,9 +58,14 @@ async fn main() -> Result<()> {
         .init();
 
     let args = Args::parse();
-    // match args.mode {
-    //     Mode::Sender => init_sender(args.address.as_str(), 5000).await?,
-    //     Mode::Receiver => init_receiver(args.address.as_str()).await?,
-    // }
+    match args.mode {
+        Mode::Sender { cert_path, key_path, tower_file_path, port, cloudflare_token } => {
+            init_sender(port, &tower_file_path, &cert_path, &key_path, cloudflare_token).await?;
+        }
+        Mode::Receiver { sender_address, output_path, cloudflare_token } => {
+            // 300 seconds validity for tower
+            init_receiver(&sender_address, &output_path, cloudflare_token, 300).await?;
+        }
+    }
     Ok(())
 }
